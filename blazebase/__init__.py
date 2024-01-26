@@ -1,0 +1,1 @@
+from .blazebase import initialize_app
