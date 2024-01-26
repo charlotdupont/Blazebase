@@ -5,7 +5,7 @@ class BlazeBaseException(Exception):
     
         
     def __str__(self):
-        return f"{self.__class__.__name__}: {self.message}"
+        return f"\033[91m{self.message}"
 
      
 class BlazeAuthenticationException(BlazeBaseException):

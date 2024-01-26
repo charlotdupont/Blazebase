@@ -1,33 +1,53 @@
-import firebase_admin as fba
+import exceptions as exc
 import requests
 
-from google.oauth2 import service_account
-
-
-import exceptions as exc
 
 def initialize_app(config):
     return BlazeBase(config)
 
 
+default_scopes = [
+    'https://www.googleapis.com/auth/firebase',
+    'https://www.googleapis.com/auth/cloud-platform'
+]
+
 class BlazeBase:
     
-    def __init__(self, config, scopes=None):
+    def __init__(self, config):
         
-        self.api_key = config["apiKey"]
-        self.auth_domain = config["authDomain"] # projectId.firebaseapp.com
-        self.database_url = config["databaseURL"] # https://databaseName.firebaseio.com
-        self.storage_bucket = config["storageBucket"] # projectId.appspot.com
-        
+        self.api_key = config.get("apiKey", None)
+        self.auth_domain = config.get("authDomain", None) # projectId.firebaseapp.com
+        self.database_url = config.get("databaseURL", None) # https://databaseName.firebaseio.com
+        self.storage_bucket = config.get("storageBucket", None) # projectId.appspot.com
+        self.scopes = config.get("scopes", default_scopes) # Allows user to customize the scopes
+
+        self.service_account_path = config.get("service_account_path", None)
+        self.service_account_info = config.get("service_account_info", None)
+
         self.requests = requests.Session()
         
-        if config.get("project_id"):
-            self.project_id = config["project_id"]
+        try:   
+            if self.service_account_info is None and self.service_account_path is None:
+                raise exc.BlazeAuthenticationException("Must provide the service account path or the service account information as a dictionary.")
+            if self.service_account_info and self.service_account_path:
+                raise exc.BlazeAuthenticationException("You can only provide a service account path or the account information.")
+            
+        except Exception as e:
+            raise exc.BlazeAuthenticationException(f"Error with the authentication process: {e}")
+    
+    def auth(self):
+        pass
+    
+    def database(self):
+        pass
+    
+    def storage(self):
+        pass
+        
+class BlazeAuth:
+    pass
         
         
-        if scopes:
-            pass
         
-        if not scopes:
-            pass
         
+blazeTest = BlazeBase(config = {"service_account_path": "something"})
