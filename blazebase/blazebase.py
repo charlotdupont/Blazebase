@@ -7,12 +7,6 @@ import firebase_admin.auth as fba
 def initialize_app(config):
     return BlazeBase(config)
 
-
-default_scopes = [
-    'https://www.googleapis.com/auth/firebase',
-    'https://www.googleapis.com/auth/cloud-platform'
-]
-
 class BlazeBase:
     
     def __init__(self, config):
