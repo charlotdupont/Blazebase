@@ -3,7 +3,7 @@
 ## Config
 
 ```json
-config = {
+"config" = {
     "serviceAccount": "Dict with service account information or the path to the json file",
     // The next arguments are optional, do not include them if they're not needed
     "databaseURL": "Url to the firebase database", 
