@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "homeseeker-v-dupont",
+  "private_key_id": "f0a39081a7774cb39a21fe6a76ad14c890dfbaf3",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCoifIo/l0zGEdw\nje3jpu0cAEb5P4HsPMjqrSptKSK1tyAbGXye+cGnuHx8LimfTSyih2FcQQJAwkrr\nFiorcS8Xf0Ej8QcI0h1MlTzZ1GMEwaQeh/esiZZsWT/2Ma+2FQ1sfEWIT2cqhpLT\nV6/FIX2NUvXrSgNf5fkurEKSAO5rEB6h0rh+jKT2uY5DH4iSQTon7rqNh+aJy6Z3\nPKF23+uEDm6qFSe4fEuawGpnYaq5VSobftJUTVYvCGeUMhLnPkFS7N5hkFQDOEFi\ngxIl+BgCm4fQ0eqrcHqzu9NesiefqTdUrS6J4yaSl68Qc8OXlpbRyZoh2j7KtR2w\nff8FLUHXAgMBAAECggEAD2Sh/cUq+qVcs6v9g+MAGaRGLIefXys3Z9pZsKSm1eqc\nKmghLgfo/F+ThxKpnIduQd3ph4Use9ZYWgZT4v8wajimLhkv0koWgPh0bqoWQnNJ\nK7yxY0x3ClL7I4pAM899GAvK8fsxP1IRNkT2TyPoQAXJY4GxXeCMP2Czp9AhS8fZ\nZ6NYe6pV/HweD7mNTQF5yLuxy/k3YoyNS1riWmtCFhawrxKYSRcOopDySS9g/8ne\naiy2SQkK8lAGG1wLIvfpPoewAJ2HQYn0jzRFdpl2xlnZ56VeO/WTyQq1ZD3Vc39E\nxZBAmei6V3LgQaUqKnYmDBeahni7vw0CcY82EEhXQQKBgQDf4wrqyQDZesnMx775\nkSGd4Qb/d2qjN2lhnxoowxMDeqHR474EqiVSruo8GrB5rpK2s50ee7m5qqAajvCI\nro+Zg3fe3G98VUxAfxnrQ4pFLCNqiwWc8ARXuoCxsEunqWMXq2/C4MDGQ2frsIT2\nQFIlH65JrdzyykZAU59CVymmIQKBgQDAtpC2TMUpqzS384RiL/NeMjo1j+Bqhbky\nNx3Zxk6z1GoriHTJ974+CZt+fEtAVPR0ALB0tzs8zLPIv6aCm6lbekdXTBhAX+cJ\nv7hjZMb7CL0TRaErVPwfJ6glIibYLhIa8w7S8MWzHdJwn44J3/FvwsXg5PznE5NP\npTFTVU749wKBgGpGNtduJGYXoBUBuAh1ONTdjVnU0Jy7X92EDYHN34emPYwJJBjI\nv0C5YNy4+o44LNJm/i0LJAUbFjalJU5sNiPzwQHb91u4jaKL8ry3aboeEo2vgjGV\nySnvkMlH2xGyGSSSL1H9J+S0+G5rcyIFNDkFCdFVo2zoUWKVjyKJh26hAoGAb9xI\n6ZhsRYCcTD5s1HWS5VVwVlDaadqPIie+Cv/CBT5CFlzRtb45TldTS7soDwKBFqij\nxEvrdaI4pUkhhOSIDJJQwMpptUw1loITrJX9rg9neL1NDRL6ebcSMeO9+nPbjIsT\nSrv5dbvUwAzNbMvxn/bF14HzjsndEzkHBaEaAwcCgYAs5l/I+6Mw+vqyaIdeJVw/\ne0UNDlq3beDEFfpc4H5p9LiILLYNPTcy4m/MtvRFuNGqpUPcyiw5PlB2m6h01Fjn\nuQPjzFONwKVjkTqP/EVl0VCGfUFRiIEiE+xy54xJI7mf9O3p+Ocl6ECmOBWPcPF8\nWduQQ1zdmwB/R64U5SIyyQ==\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-ynkl5@homeseeker-v-dupont.iam.gserviceaccount.com",
+  "client_id": "106675763647133357018",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-ynkl5%40homeseeker-v-dupont.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

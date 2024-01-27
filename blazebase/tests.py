@@ -1,9 +1,11 @@
-import google.auth
+import firebase_admin as fb
 
-credentials, projectid = google.auth.load_credentials_from_file("/home/charlesdupont/Desktop/homeseeker.json")
+test = "/home/charlesdupont/Desktop/Blazebase/firebase_account.json"
 
-n = credentials.__dict__
-f = projectid
 
-print(n)
-print(f" Something {f}")
+cred = fb.credentials.Certificate(test)
+
+
+app = fb.initialize_app(credential=cred)
+
+print(app)

@@ -1,7 +1,7 @@
 
 import exceptions as exc
 import firebase_admin as fb
-import google.auth
+import firebase_admin.auth as fba
 
 
 def initialize_app(config):
@@ -15,26 +15,13 @@ default_scopes = [
 
 class BlazeBase:
     
-    def __init__(self, config):
-        self.database_url = config.get("databaseURL", None) # https://databaseName.firebaseio.com
-        self.storage_bucket = config.get("storageBucket", None) # projectId.appspot.com
-        self.scopes = config.get("scopes", default_scopes) # Allows user to customize the scopes
-        self.quota_project_id = config.get("quota_project_id", None)
-        self.credentials = None
-        
-        if config.get("serviceAccount"):
-            try:
-                service_account_type = type(config["serviceAccount"])
-                if service_account_type is str:
-                    self.crentials = google.auth.load_credentials_from_file(config["serviceAccount"], scopes=self.scopes, quota_project_id=self.quota_project_id)
-                    self.app = fb.initialize_app(credential=self.credentials, databaseURL=self.database_url, storageBucket=self.storage_bucket)
-                if service_account_type is dict:
-                    self.credentials = google.auth.load_credentials_from_dict(config["serviceAccount"], scopes=self.scopes)
-                    self.app = fb.initialize_app(self.credentials, databaseURL=self.database_url, storageBucket=self.storage_bucket)
-            except Exception as e:
-                raise exc.BlazeAuthenticationException(f'Could not create the credentials for: "{config["serviceAccount"]}" because {e}| HINT: Ensure it is a dict or a path and that it is valid.') 
-        else:
-            self.app = fb.initialize_app(credential=None, databaseURL=self.database_url, storageBucket=self.storage_bucket)    
+    def __init__(self, config):        
+        try:                                                                                                
+            self.credentials = fb.credentials.Certificate(config.get("serviceAccount", None))
+            self.app = fb.initialize_app(credential=self.credentials)
+        except Exception as e:
+            raise exc.BlazeAuthenticationException(f"Could not authenticate the service account: {e}")
+
     
     def auth(self):
         return BlazeAuth(app=self.app)
@@ -52,11 +39,11 @@ class BlazeAuth:
     
     def verify_user_token(self, user_token):
         try:
-            decoded_token = self.app.verify_id_token(user_token, check_revoked=True)
+            decoded_token = fba.verify_id_token(id_token=user_token, app=self.app, check_revoked=True)
             uid = decoded_token["uid"]
             return uid
         except Exception as e:
-            raise exc.BlazeAuthenticationException(f"Could not verify {user_token} because {e}.")
+            raise exc.BlazeAuthenticationException(f"Could not verify token: {e}.")
         
 
 class BlazeDatabase():
@@ -68,7 +55,8 @@ class BlazeStorage():
 
         
         
-blazeTest = BlazeBase(config = {"serviceAccount": "/home/charlesdupont/Desktop/homeseeker.json"})
+blazeTest = BlazeBase(config = {"serviceAccount": "/home/charlesdupont/Desktop/Blazebase/admin_service_account.json"})
 
 testAuth = blazeTest.auth()
-testAuth.verify_user_token("This")
+
+print(testAuth.verify_user_token("eyJhbGciOiJSUzI1NiIsImtpZCI6IjY5NjI5NzU5NmJiNWQ4N2NjOTc2Y2E2YmY0Mzc3NGE3YWE5OTMxMjkiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vaG9tZXNlZWtlci12LWR1cG9udCIsImF1ZCI6ImhvbWVzZWVrZXItdi1kdXBvbnQiLCJhdXRoX3RpbWUiOjE3MDYzMjEzNzcsInVzZXJfaWQiOiJNWWs2c3JpWktXYnlUWTludGdsSW9pMmN4TkYyIiwic3ViIjoiTVlrNnNyaVpLV2J5VFk5bnRnbElvaTJjeE5GMiIsImlhdCI6MTcwNjMyMTM3NywiZXhwIjoxNzA2MzI0OTc3LCJlbWFpbCI6ImNoYXJsby5kdXBvbnRAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7ImVtYWlsIjpbImNoYXJsby5kdXBvbnRAZ21haWwuY29tIl19LCJzaWduX2luX3Byb3ZpZGVyIjoicGFzc3dvcmQifX0.dMlB7JZ14cNbChh2Bz3JFESQpWqpqBNDwiOLsZFF6O-g3uvSCRqo-zYN4SMX1FYMglN9-Lx4DZre97aF4w1caRjCJ4jUoMXIQ_BPcIlc5qsf9kUG9Z39kBjp1O7gdmWAIFaxyHRgyqN3tqbBDrpX-zeEFn_LBkpmPj-5M_4v4ChtMI80bfTbm8-lHoyvKznMw9a911pVGBH8DrC_BkUhjhYj9wI_kdHrFS6XNsNHOAQYtbnBqb_XHQ3uL6nttKG8o8irq0iUXsk81_mEnZrFkr3llKfPO851Za6uWPyWnAe8fuzX1xFfDlytxWzcRlE4e7yJbdd1B05dlSk_m5TEzw"))
