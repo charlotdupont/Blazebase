@@ -1,6 +1,7 @@
 # BlazeBase: A replacement to Pyrebase written in modern python
 
 ## Warning
+
 Currently in **very very very** early developpement... Not much has been added yet...
 
 ## Config
