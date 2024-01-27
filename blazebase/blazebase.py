@@ -1,7 +1,15 @@
+import json
+import os
 
-import exceptions as exc
 import firebase_admin as fb
 import firebase_admin.auth as fba
+import requests
+from requests_toolbelt.adapters import appengine
+
+try:
+    import blazebase.exceptions as exc
+except Exception:
+    import exceptions as exc
 
 
 def initialize_app(config):
@@ -10,6 +18,8 @@ def initialize_app(config):
 class BlazeBase:
     
     def __init__(self, config):
+        self.api_key = config.get("apiKey")
+        self.requests = requests.Session()
                 
         try:                                                                                                
             credentials = fb.credentials.Certificate(config.get("serviceAccount", None))
@@ -23,10 +33,20 @@ class BlazeBase:
                 })
         except Exception as e:
             raise exc.BlazeAuthenticationException(f"Could not authenticate the service account: {e}")
+        
+        
+        if os.getenv("GAE_ENV", "").startswith("standard"):
+            # Production in the standard env
+            adapter = appengine.AppEngineAdapter(max_retries=3)
+        else:
+            # Local execution
+            adapter = requests.adapters.HTTPAdapter(max_retries=3)
+        for scheme in ('http://', 'https://'):
+            self.requests.mount(scheme, adapter)
 
     
     def auth(self):
-        return BlazeAuth(app=self.app)
+        return BlazeAuth(app=self.app, api_key=self.api_key, request=self.requests)
     
     def database(self):
         return BlazeDatabase()
@@ -36,8 +56,10 @@ class BlazeBase:
         
 class BlazeAuth:
     
-    def __init__(self, app):
+    def __init__(self, app, api_key, request):
         self.app = app
+        self.api_key = api_key
+        self.requests = request
     
     def verify_user_token(self, user_token):
         try:
@@ -46,6 +68,15 @@ class BlazeAuth:
             return uid
         except Exception as e:
             raise exc.BlazeAuthenticationException(f"Could not verify token: {e}.")
+        
+    def sign_in_with_email_and_password(self, email, password):
+        request_ref = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key={0}".format(self.api_key)
+        headers = {'Content-Type: application/json'}
+        data = json.dumps({"email": email, "password": password, "returnSecureToken": True})
+        request_object = self.requests.post(request_ref, headers=headers, data=data)
+        
+        self.current_user = request_object.json()
+        return request_object.json()
         
 
 class BlazeDatabase():

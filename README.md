@@ -1,4 +1,4 @@
-# BlazeBase: A replacement to Pyrebase written in modern python
+# BlazeBase: A replacement to Pyrebase written with the firebase-admin sdk
 
 ## Warning
 
