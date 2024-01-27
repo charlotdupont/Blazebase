@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "blazebase"
-version = "0.1.0"
+version = "0.0.2"
 description = ""
 authors = ["Charles Dupont <charlo.dupont@gmail.com>"]
 license = "MIT"

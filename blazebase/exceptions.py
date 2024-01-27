@@ -10,5 +10,6 @@ class BlazeBaseException(Exception):
      
 class BlazeAuthenticationException(BlazeBaseException):
     pass
+
         
         
