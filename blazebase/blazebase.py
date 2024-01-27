@@ -15,10 +15,18 @@ default_scopes = [
 
 class BlazeBase:
     
-    def __init__(self, config):        
+    def __init__(self, config):
+                
         try:                                                                                                
-            self.credentials = fb.credentials.Certificate(config.get("serviceAccount", None))
-            self.app = fb.initialize_app(credential=self.credentials)
+            credentials = fb.credentials.Certificate(config.get("serviceAccount", None))
+            self.app = fb.initialize_app(credential=credentials, options={
+                "databaseURL": config.get("databaseURL", None),
+                "storageBucket": config.get("storageBucket", None), 
+                "projectId": config.get("projectId", None), 
+                "databaseAuthVariableOverride": config.get("databaseAuthVariableOverride", None),
+                "serviceAccountId": config.get("serviceAccountId", None),
+                "httpTimeout": config.get("httpTimeout", None)
+                })
         except Exception as e:
             raise exc.BlazeAuthenticationException(f"Could not authenticate the service account: {e}")
 
