@@ -4,3 +4,7 @@ __pycache__/
 tests.py
 .json
 tests/
+.pypirc
+.python-version
+poetry.lock
+dist/
